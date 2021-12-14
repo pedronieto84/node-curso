@@ -3,15 +3,21 @@ const app = express();
 const port = 3000;
 
 // Funció
-const exempleFuncio = (param) => {
-  console.log("loguejo el que rebo al params ->", param);
+const exempleFuncio = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("estic dins de la promise");
+      resolve(true);
+    }, 3000);
+  });
 };
 // Middleware
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   console.log("middleware 1");
-  exempleFuncio("aixo ho he passat com a param");
+  const awaitRes = await exempleFuncio("aixo ho he passat com a param");
+  console.log("await res", awaitRes);
   next();
 });
 
