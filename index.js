@@ -11,32 +11,6 @@ const DataStore = require("nedb"),
     autoload: true,
   });
 
-const docs = [
-  { name: "one", id: 1 },
-  { name: "two", id: 2 },
-  { name: "three", id: 3 },
-  { name: "four", id: 4 },
-  { name: "five", id: 5 },
-];
-
-// Insert data
-db.insert(docs, (err, response) => {
-  if (err) {
-    console.log("error", err);
-    process.exit(0);
-  }
-  console.log("RESPONSE OF INSERT", response);
-});
-
-// Find certain item
-db.find({ id: 3 }, (err, response) => {
-  if (err) {
-    console.log("error", err);
-    process.exit(1);
-  }
-  console.log("DOCUMENT FOUND", response);
-});
-
 // Middleware
 app.use(express.json());
 
@@ -48,8 +22,21 @@ app.get("/get", (req, res) => {
   res.send("Això es un GET");
 });
 
-app.post("/post", (req, res) => {
-  res.send(req.body);
+app.post("/user", (req, res) => {
+  console.log("vull crear el user", req.body);
+  const user = req.body;
+  if (user) {
+    db.insert(user, (err, response) => {
+      if (err) {
+        console.log("error", err);
+        process.exit(3);
+      }
+      console.log("user creat", response);
+    });
+  } else {
+    res.send("no has definit cap user");
+  }
+  res.json(req.body); // res.json es com res.send pero especificant que el content type es JSON a la metadata
 });
 
 app.put("/put", (req, res) => {
