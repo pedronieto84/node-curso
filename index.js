@@ -8,9 +8,8 @@ app.use(express.json());
 app.use((req, res, next) => {
   setTimeout(() => {
     console.log("middleware 1");
+    next();
   }, 4000);
-
-  next();
 });
 
 app.use((req, res, next) => {
