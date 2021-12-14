@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const userRoutes = require("./routes/routes.js");
 
 // Database Setup
 
@@ -14,12 +13,15 @@ const DataStore = require("nedb"),
 // Middleware
 app.use(express.json());
 
-// Us de subrutes
-app.use("/users", userRoutes);
-
 //Routes
-app.get("/get", (req, res) => {
-  res.send("Això es un GET");
+app.get("/users", (req, res) => {
+  db.find({}, (err, results) => {
+    if (err) {
+      console.log("error", err);
+      process.exit(4);
+    }
+    res.json(results);
+  });
 });
 
 app.post("/user", (req, res) => {
