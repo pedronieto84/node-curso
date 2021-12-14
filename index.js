@@ -6,15 +6,11 @@ const port = 3000;
 app.use(express.json());
 
 app.use((req, res, next) => {
-  setTimeout(() => {
-    console.log("middleware 1");
-    next();
-  }, 4000);
+  console.log("middleware 1");
 });
 
 app.use((req, res, next) => {
   console.log("middleware 2");
-  next();
 });
 
 //Routes
