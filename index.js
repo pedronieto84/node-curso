@@ -41,8 +41,20 @@ app.post("/user", (req, res) => {
   res.json(req.body); // res.json es com res.send pero especificant que el content type es JSON a la metadata
 });
 
-app.put("/put", (req, res) => {
-  res.send("Això es un PUT");
+app.put("/update-user", (req, res) => {
+  const newUser = req.body;
+  console.log("new user object", newUser);
+  if (newUser) {
+    db.update({ name: req.body.name }, newUser, (err, response) => {
+      if (err) {
+        console.log("error", err);
+        process.exit(8);
+      }
+      res.json(response);
+    });
+  } else {
+    res.send("you forgot to specify a user object");
+  }
 });
 
 app.delete("/users-delete-by-name", (req, res) => {
