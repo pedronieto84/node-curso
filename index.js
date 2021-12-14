@@ -3,6 +3,40 @@ const app = express();
 const port = 3000;
 const userRoutes = require("./routes/routes.js");
 
+// Database Setup
+
+const DataStore = require("nedb"),
+  db = new DataStore({
+    filename: __dirname + "/data/example.dat",
+    autoload: true,
+  });
+
+const docs = [
+  { name: "one", id: 1 },
+  { name: "two", id: 2 },
+  { name: "three", id: 3 },
+  { name: "four", id: 4 },
+  { name: "five", id: 5 },
+];
+
+// Insert data
+db.insert(docs, (err, response) => {
+  if (err) {
+    console.log("error", err);
+    process.exit(0);
+  }
+  console.log("RESPONSE OF INSERT", response);
+});
+
+// Find certain item
+db.find({ id: 3 }, (err, response) => {
+  if (err) {
+    console.log("error", err);
+    process.exit(1);
+  }
+  console.log("DOCUMENT FOUND", response);
+});
+
 // Middleware
 app.use(express.json());
 
