@@ -45,8 +45,17 @@ app.put("/put", (req, res) => {
   res.send("Això es un PUT");
 });
 
-app.delete("/delete", (req, res) => {
-  res.send("Això es un delete");
+app.delete("/users-delete-by-name", (req, res) => {
+  const name = req.body.name;
+  console.log("NOM DE PERSONA A ELIMINAR", name);
+
+  db.remove({ nom: name }, {}, (err, response) => {
+    if (err) {
+      console.error(err);
+      process.exit(6);
+    }
+    res.json(response);
+  });
 });
 
 app.listen(port, () => {
