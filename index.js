@@ -6,7 +6,10 @@ const port = 3000;
 app.use(express.json());
 
 app.use((req, res, next) => {
-  console.log("middleware 1");
+  setTimeout(() => {
+    console.log("middleware 1");
+  }, 4000);
+
   next();
 });
 
