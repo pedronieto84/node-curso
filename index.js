@@ -2,15 +2,22 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// Funció
+const exempleFuncio = (param) => {
+  console.log("loguejo el que rebo al params ->", param);
+};
 // Middleware
 app.use(express.json());
 
 app.use((req, res, next) => {
   console.log("middleware 1");
+  exempleFuncio("aixo ho he passat com a param");
+  next();
 });
 
 app.use((req, res, next) => {
   console.log("middleware 2");
+  next();
 });
 
 //Routes
