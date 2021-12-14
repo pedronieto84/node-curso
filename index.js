@@ -5,6 +5,16 @@ const port = 3000;
 // Middleware
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log("middleware 1");
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log("middleware 2");
+  next();
+});
+
 //Routes
 
 app.get("/get", (req, res) => {
