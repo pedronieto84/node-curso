@@ -2,12 +2,17 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// Middleware
+app.use(express.json());
+
+//Routes
+
 app.get("/get", (req, res) => {
   res.send("Això es un GET");
 });
 
 app.post("/post", (req, res) => {
-  res.send("Això es un POST");
+  res.send(req.body);
 });
 
 app.put("/put", (req, res) => {
